@@ -1,0 +1,81 @@
+<div class="container">
+    <div class="box mb-5">
+        <div class="credit-card-box">
+            <div class="credit-card-face" [ngClass]="{'is-flipped' : IsCVVFoucsed}">
+                <div class="credit-card-front">
+                    <div>
+                        <span class="brand-hologram">
+                    <img src="../../../../assets/images/chip.png" class="chip-img" alt="chip">
+                </span>
+                        <span class="brand-logo" *ngIf="CardType && CardType?.trim()!=''">
+                    <img src="{{ '../../../../assets/images/' + CardType + '.png' }}" alt="h">
+                </span>
+                    </div>
+
+                    <div class="card-num-box my-4" [ngClass]="{'make-border-white' : IsCardNumberFocused}">
+                        <input type="text" class="w-100" placeholder="some content" [value]="CardNumber" disabled>
+                    </div>
+                    <div class="credit-card-footer">
+                        <div class="custom-inputbox left-box" [ngClass]="{'make-border-white' : IsCardHolderFoucsed}">
+                            <label class="top-placeholder">CardHolder</label>
+                            <input type="text" placeholder="Card Holder" [value]="CardHolder" disabled>
+                        </div>
+                        <div class="custom-inputbox right-box" [ngClass]="{'make-border-white' : (IsExpirationYearFocused || IsExpirationMonthFoucsed)}">
+                            <label class="top-placeholder">Expires</label>
+                            <input type="text" placeholder="Expiration" [value]="(ExpirationMonth) + '/' + ExpirationYear" disabled>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                </div>
+
+                <div class="credit-card-back">
+                    <div class="credit-card-header">
+                    </div>
+                    <div class="p-2">
+                        <label class="float-right text-white">CVV</label>
+                        <input type="password" class="text-right background-white w-100" placeholder="CVV" [value]="CVV" disabled>
+                    </div>
+                    <div class="clear"></div>
+                    <div class="p-2 mb-3">
+                        <span class="brand-logo" *ngIf="CardType && CardType?.trim()!=''">
+                    <img src="{{ '../../../../assets/images/' + CardType + '.png' }}" alt="h">
+                </span>
+                        <div class="clear"></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="form-centre">
+            <div class="credit-empty-header"></div>
+            <div class="form-group">
+                <label for="inputAddress">Card Number</label>
+                <input type="text" maxlength="19" [(ngModel)]="txtCardNumber" (keyup)="changeCardValue('cardnumber',txtCardNumber)" (focus)="changeCardFocus('cardnumber')" class="form-control" id="txtCardNumber" placeholder="Card Number">
+            </div>
+            <div class="form-group">
+                <label for="inputAddress2">Card Holder</label>
+                <input type="text" maxlength="20" #cardHolder class="form-control" (keyup)="changeCardValue('cardholder',cardHolder.value)" (focus)="changeCardFocus('cardholder')" id="txtCardName" placeholder="Card Holder">
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="expirationDate">Expiration Date</label>
+                    <select id="expirationMonth" #expirationMonth class="form-control" (focus)="changeCardFocus('expirationmonth')" (change)="changeCardValue('expirationmonth',expirationMonth.value)">
+                        <option selected>Month</option>
+                        <option *ngFor="let month of monthList" value='{{ month }}'>{{ month | number:'2.0-0' }}</option>
+                      </select>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="inputState" style="height:18px"></label>
+                    <select id="expirationYear" #expirationYear class="form-control" (focus)="changeCardFocus('expirationyear')" (change)="changeCardValue('expirationyear',expirationYear.value)">
+                        <option selected>Year</option>
+                        <option *ngFor="let year of yearList" value='{{ year }}'>{{ year }}</option>
+                      </select>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="txtCVV">CVV</label>
+                    <input type="text" maxlength="3" #cvv class="form-control" (focus)="changeCardFocus('cvv')" (keyup)="changeCardValue('cvv',cvv.value)" id="txtCVV" placeholder="CVV">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
